@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Condition="'$(TargetFramework)' == 'Silverlight'">
+    <TargetFrameworkIdentifier>Silverlight</TargetFrameworkIdentifier>
+    <SilverlightApplication>false</SilverlightApplication>
+    <SilverlightVersion Condition="'$(SilverlightVersion)' == ''">v5.0</SilverlightVersion>
+  </PropertyGroup>
+  <PropertyGroup>
+    <LkgVersion>1.9.7.7</LkgVersion>
+    <FsLexUnicode>true</FsLexUnicode>
+    <OutputPath Condition="'$(TargetFramework)' == ''">$(FSharpPowerPackSourcesRoot)\..\$(Configuration)\bin</OutputPath>
+    <OutputPath Condition="'$(TargetFramework)' == 'Silverlight'">$(FSharpPowerPackSourcesRoot)\..\$(TargetFramework)\$(SilverlightVersion)\$(Configuration)\bin</OutputPath>
+    <IntermediateOutputPath Condition="'$(TargetFramework)' == ''">obj\$(Configuration)</IntermediateOutputPath>    
+    <IntermediateOutputPath Condition="'$(TargetFramework)' == 'Silverlight'">obj\$(TargetFramework)\$(SilverlightVersion)\$(Configuration)</IntermediateOutputPath>
+    <FsLexToolPath>$(FSharpPowerPackSourcesRoot)\..\lkg\FSharp.PowerPack-$(LkgVersion)\bin</FsLexToolPath>
+    <FsLexToolExe>fslex.exe</FsLexToolExe>
+    <FsYaccToolPath>$(FSharpPowerPackSourcesRoot)\..\lkg\FSharp.PowerPack-$(LkgVersion)\bin</FsYaccToolPath>
+    <FsYaccToolExe>fsyacc.exe</FsYaccToolExe>
+    
+  </PropertyGroup>
+
+  <!-- Selecting the correct key pair -->
+
+  <PropertyGroup Condition=" '$(TargetFramework)' != 'Silverlight' AND '$(StrongName)' != 'false'">
+    <OtherFlags Condition="Exists('$(FSharpPowerPackSourcesRoot)\fs.snk')">/keyfile:$(FSharpPowerPackSourcesRoot)\fs.snk $(OtherFlags)</OtherFlags>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'Silverlight'  ">
+    <OtherFlags Condition="Exists('$(FSharpPowerPackSourcesRoot)\fsSilverlight.snk') AND '$(StrongName)' != 'false'">/keyfile:$(FSharpPowerPackSourcesRoot)\fsSilverlight.snk $(OtherFlags)</OtherFlags>
+    <DefineConstants>$(DefineConstants);SILVERLIGHT;</DefineConstants>
+    <DefineConstants>$(DefineConstants);FX_NO_SET_CURRENT_DIRECTORY</DefineConstants>
+    <DefineConstants>$(DefineConstants);FX_NO_BIGINT_PARSE</DefineConstants>
+    <DefineConstants>$(DefineConstants);FX_NO_COMMAND_LINE_ARGS</DefineConstants>
+    <DefineConstants>$(DefineConstants);FX_NO_CULTURE_INFO_ARGS</DefineConstants>
+    <DefineConstants>$(DefineConstants);FX_NO_FILE_OPTIONS</DefineConstants>
+    <DefineConstants>$(DefineConstants);FX_NO_FILESTREAM_ISASYNC</DefineConstants>
+    <DefineConstants>$(DefineConstants);FX_NO_UTF32ENCODING</DefineConstants>
+    <DefineConstants>$(DefineConstants);FX_NO_STDIN</DefineConstants>
+    <DefineConstants>$(DefineConstants);FX_NO_EXIT</DefineConstants>
+    <DefineConstants>$(DefineConstants);FX_NO_CONVERTER</DefineConstants>
+    <DefineConstants>$(DefineConstants);FX_NO_DEFAULT_DEPENDENCY_TYPE</DefineConstants>
+    <DefineConstants>$(DefineConstants);FX_NO_TO_LOWER_INVARIANT</DefineConstants>
+    <DefineConstants>$(DefineConstants);FX_NO_DOUBLE_BIT_CONVERTER</DefineConstants>
+    <DefineConstants>$(DefineConstants);FX_NO_TRUNCATE</DefineConstants>
+    <DefineConstants>$(DefineConstants);FX_NO_ENVIRONMENT</DefineConstants>
+    <DefineConstants>$(DefineConstants);FX_NO_PROCESS_START</DefineConstants>
+    <DefineConstants>$(DefineConstants);FX_NO_PROCESS_DIAGNOSTICS</DefineConstants>
+    <DefineConstants>$(DefineConstants);FX_NO_APP_DOMAINS</DefineConstants>
+    <DefineConstants>$(DefineConstants);FX_NO_DEFAULT_ENCODING</DefineConstants>
+    <DefineConstants>$(DefineConstants);FX_NO_NONBLOCK_IO</DefineConstants>
+    <DefineConstants>$(DefineConstants);FX_NO_BINARY_SERIALIZATION</DefineConstants>
+    <DefineConstants>$(DefineConstants);FX_NO_ASCII_ENCODING</DefineConstants>
+    <DefineConstants>$(DefineConstants);FX_NO_FILEWRITEALL</DefineConstants>
+    <DefineConstants>$(DefineConstants);FX_NO_WINDOWSFORMS</DefineConstants>
+    <DefineConstants>$(DefineConstants);FX_NO_DEFAULT_DECIMAL_ROUND</DefineConstants>
+    <DefineConstants>$(DefineConstants);FX_NO_ENCODER_FALLBACK</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Condition="'$(TargetFramework)' == ''" Include="FSharp.Core, Version=4.3.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <Reference Condition="'$(TargetFramework)' == 'Silverlight' AND '$(SilverlightVersion)' == 'v5.0'" Include="System.Core" />
+    <Reference Condition="'$(TargetFramework)' == 'Silverlight' AND '$(SilverlightVersion)' == 'v5.0'" Include="System.Numerics" />
+    <Reference Condition="'$(TargetFramework)' == 'Silverlight'" Include="$(MSBuildExtensionsPath32)\..\Reference Assemblies\Microsoft\FSharp\3.0\Runtime\.NETPortable\FSharp.Core.dll" />
+  </ItemGroup>
+</Project>
