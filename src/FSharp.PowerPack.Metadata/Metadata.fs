@@ -609,7 +609,8 @@ and [<Sealed>] FSharpEntity(entity:SimulatedEntityRef) =
             checkIsFSharp(); 
             ((entity.MembersOfFSharpTyconSorted
               |> List.filter (fun v -> not v.IsOverrideOrExplicitImpl && 
-                                       not v.Deref.IsClassConstructor)
+                                       not v.Deref.IsClassConstructor &&
+                                       isPublic v.Accessibility)
               |> List.map (fun v -> FSharpMemberOrVal(this, v.Deref)))
             @
              (entity.ModuleOrNamespaceType.AllValsAndMembers
