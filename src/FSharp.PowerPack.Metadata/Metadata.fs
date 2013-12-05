@@ -238,7 +238,7 @@ type [<Sealed>] AssemblyLoader() =
         match existing with
         |   Some _ -> existing
         |   None ->
-                let assembly = Assembly.LoadWithPartialName name
+                let assembly = Assembly.Load name
                 AssemblyLoader.TryAdd(name, assembly)
     
     static member Get(assembly : Assembly) : FSharpAssembly =
